@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+
+<form action="{% url 'accounts:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Выйти</button>
+</form>
+
+<a href="{% url 'accounts:password_change' %}">Сменить пароль</a>
+
+{% endblock content %}

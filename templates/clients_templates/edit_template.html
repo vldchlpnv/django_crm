@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block tittle %}Изменение данных клиента{% endblock tittle %}
+
+{% block content %}
+<h2>Введите новые данные</h2>
+
+<form method="post">
+
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Принять</button>
+
+</form>
+
+{% endblock content %}

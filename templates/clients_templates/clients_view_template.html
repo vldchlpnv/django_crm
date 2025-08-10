@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+{% block tittle %}Список клиентов{% endblock tittle %}
+
+{% block content %}
+
+
+<div>
+
+    <form method="post" >
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create">
+        {{form.as_p}}
+        <button type="submit">Добавить</button>
+
+    </form>
+
+</div>
+
+<div>
+
+
+
+    <table border="1" cellspacing="1" cellpadding="1">
+        <caption> Список клиентов менеджера "После создания пользовательской системы тут будут имена"</caption>
+        {% for i in clients_list %}
+
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Электронная почта</th>
+            <th>Телефон</th>
+            <th>Дата добавления</th>
+            <th>Дата обновления</th>
+            <th>Потраченная клиентом сумма общая</th>
+            <th>Цена последней сделки</th>
+
+            <th>Статус клиента</th>
+            <th>Заметки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{i.first_name}}</td>
+            <td>{{i.last_name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.phone}}</td>
+            <td>{{i.created_at}}</td>
+            <td>{{i.updated_at}}</td>
+            <td>{{i.total_spent}}</td>
+            <td>{{i.last_deal_price}}</td>
+
+            <td>{{i.status}}</td>
+            <td>{{i.notes}}</td>
+
+            <td>
+                <a href="{% url 'clients:clients_edit' i.id %}"> Редактировать данные</a>
+            </td>
+
+            <td>
+                <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="{{ i.id }}">
+                <button type="submit" onclick="return confirm('Удалить {{ client.first_name }}?')">Удалить</button>
+                </form>
+            </td>
+
+        </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+
+</div>
+
+
+{% endblock content %}

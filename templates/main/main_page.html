@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock title %}
+
+
+
+
+{% block content %}
+<div>
+
+    <a href="{% url 'main:user_profile' %}">Мой профиль</a>
+    <a href="">Добавить клиента</a>
+    <a href="">Задачи</a>
+    <a href="">Сделки</a>
+    <a href="">Посмотреть отчёты</a>
+    <a href="">Перейти в календарь</a>
+
+</div>
+{% endblock content %}
