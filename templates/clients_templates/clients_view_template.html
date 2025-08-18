@@ -20,12 +20,9 @@
 
 <div>
 
-
-
     <table border="1" cellspacing="1" cellpadding="1">
-        <caption> Список клиентов менеджера "После создания пользовательской системы тут будут имена"</caption>
         {% for i in clients_list %}
-
+        <caption> Список клиентов менеджера "После создания пользовательской системы тут будут имена"</caption>
         <thead>
         <tr>
             <th>Имя</th>
@@ -47,8 +44,8 @@
             <td>{{i.last_name}}</td>
             <td>{{i.email}}</td>
             <td>{{i.phone}}</td>
-            <td>{{i.created_at}}</td>
-            <td>{{i.updated_at}}</td>
+            <td>{{i.created_at|date:"d.m.Y H:i"}}</td>
+            <td>{{i.updated_at|date:"d.m.Y H:i"}}</td>
             <td>{{i.total_spent}}</td>
             <td>{{i.last_deal_price}}</td>
 
@@ -70,6 +67,8 @@
 
         </tr>
         </tbody>
+        {% empty %}
+        <h2>Клиентов пока нет</h2>
     {% endfor %}
     </table>
 

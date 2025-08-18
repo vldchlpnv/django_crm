@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 
 from .forms import RegistrationForm
 from django.contrib.auth.models import User
+from .forms import UserAuthenticationForm
 
 from django.views import View
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordChangeView, \
@@ -33,9 +34,31 @@ class SignUpView(View):
 
 class Login(LoginView):
     '''Класс входа пользователя в аккаунт'''
+
+    form_class = UserAuthenticationForm
     template_name = 'registration/login.html'
     redirect_authenticated_user = True
     success_url = reverse_lazy('main:main_page')
+
+
+    def form_valid(self, form):
+        '''Проверяем валидность поля remember_me'''
+
+        remember_me = form.cleaned_data.get('remember_me')  # Забираем значение из формы True/False
+
+        # Проверяем знаечние и устанавливаем время жизни сессии
+        if not remember_me:
+            self.request.session.set_expiry(0)
+            # иначе время жизни сесиси 7 дней ка куказано в SESSION_COOKIE_AGE
+        return super(Login, self).form_valid(form)
+
+
+
+
+
+
+
+
 
 
 class Logout(LogoutView):

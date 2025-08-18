@@ -135,3 +135,43 @@ LOGIN_REDIRECT_URL = 'main:main_page'
 
 
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+
+# бэкенд кэша
+CACHES = {
+    # кэш (джанго хочет default)
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",  # db=0
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+
+        },
+        "KEY_PREFIX": "cache",
+    },
+    # сессии
+    "sessions": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # db=1
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+
+        },
+        "KEY_PREFIX": "session",
+    },
+    # Celery для брокера
+    "celery": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",  # db=2
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+
+        },
+        "KEY_PREFIX": "celery",
+    },
+}
+
+# Блок настройки сессий
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "sessions"
+
+SESSION_COOKIE_AGE = 60*60*24*7  # Будет жить неделю если пользователь попросил запомнить его
